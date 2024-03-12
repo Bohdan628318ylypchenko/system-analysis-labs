@@ -104,7 +104,7 @@ int main(void)
 			global_priorities[i] += cc_weight_array[j] * cb_weight_matrix[j][i];
 		}
 	}
-	puts("\n\nglobal priorities: "); array_print(ALTERNATIVE_COUNT, global_priorities);
+	puts("\n\n==========> global priorities: "); array_print(ALTERNATIVE_COUNT, global_priorities);
 
 	free(cc_weight_array);
 	matrix_free(cc_matrix, CRITERIA_COUNT);
