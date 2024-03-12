@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{6e76b043-9b9f-42bc-812f-66275874a974}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\pareto">
+      <UniqueIdentifier>{d8af3e8a-ac7a-4ff4-bcf7-64e4ea49e169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pareto">
+      <UniqueIdentifier>{249cedc0-1acf-4a0a-80f1-5a516816a44e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pareto_data.c">
+      <Filter>Source Files\pareto</Filter>
+    </ClCompile>
+    <ClCompile Include="pareto_eval.c">
+      <Filter>Source Files\pareto</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pareto.h">
+      <Filter>Header Files\pareto</Filter>
+    </ClInclude>
+    <ClInclude Include="pareto_utils.h">
+      <Filter>Header Files\pareto</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
