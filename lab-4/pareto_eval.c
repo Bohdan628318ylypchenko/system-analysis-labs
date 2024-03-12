@@ -83,14 +83,9 @@ void pareto_r(const pareto_data * restrict const p_d, const long double * restri
 		r[i] = 0.0;
 		for (int j = 0; j < p_d->pareto_count; j++)
 		{
-			//long double pji = p_d->data_2darr[p_d->pareto_list[j]][i];
-			//printf("| %Lf - %Lf | ", pji, p[i]);
 			r[i] += fabsl(p_d->data_2darr[p_d->pareto_list[j]][i] - p[i]);
 		}
-			//r[i] += (p_d->data_2darr[p_d->pareto_list[j]][i] - p[i]) < 0 ?
-			//-1.0 * (p_d->data_2darr[p_d->pareto_list[j]][i] - p[i]) : (p_d->data_2darr[p_d->pareto_list[j]][i] - p[i]);
 		r[i] /= ((long double)p_d->pareto_count * p[i]);
-		//putchar('\n');
 	}
 }
 
