@@ -2,9 +2,14 @@
 #include <stdio.h>
 #include <math.h>
 
-#define ALTERNATIVE_COUNT 3
-#define CRITERIA_COUNT 5
-#define VN 1.12
+//#define ALTERNATIVE_COUNT 3
+//#define CRITERIA_COUNT 5
+//#define VN 1.12
+
+#define ALTERNATIVE_COUNT 6
+#define CRITERIA_COUNT 6
+#define VN 1.24
+
 #define MAX_COHERENCE 0.2
 
 #define NULL_EXIT(ptr) if (ptr == NULL) exit(1)
@@ -31,35 +36,85 @@ static inline void array_print(int dim, const long double * restrict const array
 int main(void)
 {
 	long double ** cc_matrix = matrix_alloc(CRITERIA_COUNT, CRITERIA_COUNT);
-	cc_matrix[0][0] = 1.0;       cc_matrix[0][1] = 7.0; cc_matrix[0][2] = 3.0;       cc_matrix[0][3] = 2.0;       cc_matrix[0][4] = 5.0;
-	cc_matrix[1][0] = 1.0 / 7.0; cc_matrix[1][1] = 1.0; cc_matrix[1][2] = 1.0 / 7.0; cc_matrix[1][3] = 1.0 / 9.0; cc_matrix[1][4] = 1.0 / 3.0;
-	cc_matrix[2][0] = 1.0 / 3.0; cc_matrix[2][1] = 7.0; cc_matrix[2][2] = 1.0;       cc_matrix[2][3] = 1.0 / 5.0; cc_matrix[2][4] = 4.0;
-	cc_matrix[3][0] = 1.0 / 2.0; cc_matrix[3][1] = 9.0; cc_matrix[3][2] = 5.0;       cc_matrix[3][3] = 1.0;       cc_matrix[3][4] = 5.0;
-	cc_matrix[4][0] = 1.0 / 5.0; cc_matrix[4][1] = 3.0; cc_matrix[4][2] = 1.0 / 4.0; cc_matrix[4][3] = 1.0 / 5.0; cc_matrix[4][4] = 1.0;
+
+	//cc_matrix[0][0] = 1.0;       cc_matrix[0][1] = 7.0; cc_matrix[0][2] = 3.0;       cc_matrix[0][3] = 2.0;       cc_matrix[0][4] = 5.0;
+	//cc_matrix[1][0] = 1.0 / 7.0; cc_matrix[1][1] = 1.0; cc_matrix[1][2] = 1.0 / 7.0; cc_matrix[1][3] = 1.0 / 9.0; cc_matrix[1][4] = 1.0 / 3.0;
+	//cc_matrix[2][0] = 1.0 / 3.0; cc_matrix[2][1] = 7.0; cc_matrix[2][2] = 1.0;       cc_matrix[2][3] = 1.0 / 5.0; cc_matrix[2][4] = 4.0;
+	//cc_matrix[3][0] = 1.0 / 2.0; cc_matrix[3][1] = 9.0; cc_matrix[3][2] = 5.0;       cc_matrix[3][3] = 1.0;       cc_matrix[3][4] = 5.0;
+	//cc_matrix[4][0] = 1.0 / 5.0; cc_matrix[4][1] = 3.0; cc_matrix[4][2] = 1.0 / 4.0; cc_matrix[4][3] = 1.0 / 5.0; cc_matrix[4][4] = 1.0;
+
+	cc_matrix[0][0] = 1.0;       cc_matrix[0][1] = 5.0; cc_matrix[0][2] = 1.0;       cc_matrix[0][3] = 4.0;       cc_matrix[0][4] = 3.0;       cc_matrix[0][5] = 1.0 / 2.0;
+	cc_matrix[1][0] = 1.0 / 5.0; cc_matrix[1][1] = 1.0; cc_matrix[1][2] = 1.0 / 5.0; cc_matrix[1][3] = 1.0 / 4.0; cc_matrix[1][4] = 1.0 / 2.0; cc_matrix[1][5] = 1.0 / 5.0;
+	cc_matrix[2][0] = 1.0;       cc_matrix[2][1] = 5.0; cc_matrix[2][2] = 1.0;       cc_matrix[2][3] = 7.0;       cc_matrix[2][4] = 5.0;       cc_matrix[2][5] = 1.0 / 2.0;
+	cc_matrix[3][0] = 1.0 / 4.0; cc_matrix[3][1] = 4.0; cc_matrix[3][2] = 1.0 / 7.0; cc_matrix[3][3] = 1.0;       cc_matrix[3][4] = 4.0;       cc_matrix[3][5] = 1.0 / 2.0;
+	cc_matrix[4][0] = 1.0 / 3.0; cc_matrix[4][1] = 2.0; cc_matrix[4][2] = 1.0 / 5.0; cc_matrix[4][3] = 1.0 / 4.0; cc_matrix[4][4] = 1.0;       cc_matrix[4][5] = 1.0 / 2.0;
+	cc_matrix[5][0] = 2;         cc_matrix[5][1] = 5.0; cc_matrix[5][2] = 2;         cc_matrix[5][3] = 2.0;       cc_matrix[5][4] = 2.0;       cc_matrix[5][5] = 1.0;
 
 	long double *** cb_matrix_array = (long double ***)calloc(CRITERIA_COUNT, sizeof(long double **)); NULL_EXIT(cb_matrix_array);
 	for (int i = 0; i < CRITERIA_COUNT; i++)
 		cb_matrix_array[i] = matrix_alloc(ALTERNATIVE_COUNT, ALTERNATIVE_COUNT);
 
-	cb_matrix_array[0][0][0] = 1.0;       cb_matrix_array[0][0][1] = 6.0;       cb_matrix_array[0][0][2] = 8.0;
-	cb_matrix_array[0][1][0] = 1.0 / 6.0; cb_matrix_array[0][1][1] = 1.0;       cb_matrix_array[0][1][2] = 4.0;
-	cb_matrix_array[0][2][0] = 1.0 / 8.0; cb_matrix_array[0][2][1] = 1.0 / 4.0; cb_matrix_array[0][2][2] = 1.0;
+	cb_matrix_array[0][0][0] = 1.0;       cb_matrix_array[0][0][1] = 5.0;       cb_matrix_array[0][0][2] = 1.0;       cb_matrix_array[0][0][3] = 1.0;       cb_matrix_array[0][0][4] = 3.0;       cb_matrix_array[0][0][5] = 7.0;
+	cb_matrix_array[0][1][0] = 1.0 / 5.0; cb_matrix_array[0][1][1] = 1.0;       cb_matrix_array[0][1][2] = 1.0 / 5.0; cb_matrix_array[0][1][3] = 1.0 / 5.0; cb_matrix_array[0][1][4] = 1.0 / 3.0; cb_matrix_array[0][1][5] = 2.0;
+	cb_matrix_array[0][2][0] = 1.0;       cb_matrix_array[0][2][1] = 5.0;       cb_matrix_array[0][2][2] = 1.0;       cb_matrix_array[0][2][3] = 1.0;       cb_matrix_array[0][2][4] = 3.0;       cb_matrix_array[0][2][5] = 7.0;
+	cb_matrix_array[0][3][0] = 1.0;       cb_matrix_array[0][3][1] = 5.0;       cb_matrix_array[0][3][2] = 1.0;       cb_matrix_array[0][3][3] = 1.0;       cb_matrix_array[0][3][4] = 3.0;       cb_matrix_array[0][3][5] = 6.0;
+	cb_matrix_array[0][4][0] = 1.0 / 3.0; cb_matrix_array[0][4][1] = 3.0;       cb_matrix_array[0][4][2] = 1.0 / 3.0; cb_matrix_array[0][4][3] = 1.0 / 3.0; cb_matrix_array[0][4][4] = 1.0;       cb_matrix_array[0][4][5] = 2.0;
+	cb_matrix_array[0][5][0] = 1.0 / 7.0; cb_matrix_array[0][5][1] = 1.0 / 2.0; cb_matrix_array[0][5][2] = 1.0 / 7.0; cb_matrix_array[0][5][3] = 1.0 / 6.0; cb_matrix_array[0][5][4] = 1.0 / 2.0; cb_matrix_array[0][5][5] = 1.0;
 
-	cb_matrix_array[1][0][0] = 1.0;       cb_matrix_array[1][0][1] = 7.0; cb_matrix_array[1][0][2] = 1.0 / 5.0;
-	cb_matrix_array[1][1][0] = 1.0 / 7.0; cb_matrix_array[1][1][1] = 1.0; cb_matrix_array[1][1][2] = 1.0 / 8.0;
-	cb_matrix_array[1][2][0] = 5.0;       cb_matrix_array[1][2][1] = 8.0; cb_matrix_array[1][2][2] = 1.0;
+	cb_matrix_array[1][0][0] = 1.0; cb_matrix_array[1][0][1] = 1.0 / 6.0; cb_matrix_array[1][0][2] = 1.0 / 6.0;  cb_matrix_array[1][0][3] = 1.0 / 6.0;  cb_matrix_array[1][0][4] = 1.0 / 6.0; cb_matrix_array[1][0][5] = 1.0 / 2.0;
+	cb_matrix_array[1][1][0] = 6.0; cb_matrix_array[1][1][1] = 1.0;       cb_matrix_array[1][1][2] = 1.0;        cb_matrix_array[1][1][3] = 1.0;        cb_matrix_array[1][1][4] = 1.0;       cb_matrix_array[1][1][5] = 4.0;
+	cb_matrix_array[1][2][0] = 6.0; cb_matrix_array[1][2][1] = 1.0;       cb_matrix_array[1][2][2] = 1.0;        cb_matrix_array[1][2][3] = 1.0;        cb_matrix_array[1][2][4] = 1.0;       cb_matrix_array[1][2][5] = 4.0;
+	cb_matrix_array[1][3][0] = 6.0; cb_matrix_array[1][3][1] = 1.0;       cb_matrix_array[1][3][2] = 1.0;        cb_matrix_array[1][3][3] = 1.0;        cb_matrix_array[1][3][4] = 1.0;       cb_matrix_array[1][3][5] = 4.0;
+	cb_matrix_array[1][4][0] = 6.0; cb_matrix_array[1][4][1] = 1.0;       cb_matrix_array[1][4][2] = 1.0;        cb_matrix_array[1][4][3] = 1.0;        cb_matrix_array[1][4][4] = 1.0;       cb_matrix_array[1][4][5] = 4.0;
+	cb_matrix_array[1][5][0] = 2.0; cb_matrix_array[1][5][1] = 1.0 / 4.0; cb_matrix_array[1][5][2] = 1.0 / 4.0;  cb_matrix_array[1][5][3] = 1.0 / 4.0;  cb_matrix_array[1][5][4] = 1.0 / 4.0; cb_matrix_array[1][5][5] = 1.0;
 
-	cb_matrix_array[2][0][0] = 1.0; cb_matrix_array[2][0][1] = 1.0 / 2.0; cb_matrix_array[2][0][2] = 1.0 / 2.0;
-	cb_matrix_array[2][1][0] = 2.0; cb_matrix_array[2][1][1] = 1.0;       cb_matrix_array[2][1][2] = 1.0;
-	cb_matrix_array[2][2][0] = 2.0; cb_matrix_array[2][2][1] = 1.0;       cb_matrix_array[2][2][2] = 1.0;
+	cb_matrix_array[2][0][0] = 1.0; cb_matrix_array[2][0][1] = 1.0; cb_matrix_array[2][0][2] = 1.0 / 5.0; cb_matrix_array[2][0][3] = 1.0; cb_matrix_array[2][0][4] = 1.0; cb_matrix_array[2][0][5] = 1.0 / 7.0;
+	cb_matrix_array[2][1][0] = 1.0; cb_matrix_array[2][1][1] = 1.0; cb_matrix_array[2][1][2] = 1.0 / 5.0; cb_matrix_array[2][1][3] = 1.0; cb_matrix_array[2][1][4] = 1.0; cb_matrix_array[2][1][5] = 1.0 / 7.0;
+	cb_matrix_array[2][2][0] = 5.0; cb_matrix_array[2][2][1] = 5.0; cb_matrix_array[2][2][2] = 1.0;       cb_matrix_array[2][2][3] = 5.0; cb_matrix_array[2][2][4] = 5.0; cb_matrix_array[2][2][5] = 1.0 / 5.0;
+	cb_matrix_array[2][3][0] = 1.0; cb_matrix_array[2][3][1] = 1.0; cb_matrix_array[2][3][2] = 1.0 / 5.0; cb_matrix_array[2][3][3] = 1.0; cb_matrix_array[2][3][4] = 1.0; cb_matrix_array[2][3][5] = 1.0 / 7.0;
+	cb_matrix_array[2][4][0] = 1.0; cb_matrix_array[2][4][1] = 1.0; cb_matrix_array[2][4][2] = 1.0 / 5.0; cb_matrix_array[2][4][3] = 1.0; cb_matrix_array[2][4][4] = 1.0; cb_matrix_array[2][4][5] = 1.0 / 7.0;
+	cb_matrix_array[2][5][0] = 7.0; cb_matrix_array[2][5][1] = 7.0; cb_matrix_array[2][5][2] = 5;         cb_matrix_array[2][5][3] = 7.0; cb_matrix_array[2][5][4] = 7.0; cb_matrix_array[2][5][5] = 1.0;
 
-	cb_matrix_array[3][0][0] = 1.0; cb_matrix_array[3][0][1] = 1.0 / 7.0; cb_matrix_array[3][0][2] = 1.0 / 5.0;
-	cb_matrix_array[3][1][0] = 7.0; cb_matrix_array[3][1][1] = 1.0;       cb_matrix_array[3][1][2] = 3.0;
-	cb_matrix_array[3][2][0] = 5.0; cb_matrix_array[3][2][1] = 1.0 / 3.0; cb_matrix_array[3][2][2] = 1.0;
+	cb_matrix_array[3][0][0] = 1.0;       cb_matrix_array[3][0][1] = 1.0 / 3.0; cb_matrix_array[3][0][2] = 2.0;       cb_matrix_array[3][0][3] = 3.0; cb_matrix_array[3][0][4] = 1.0 / 6.0; cb_matrix_array[3][0][5] = 1.0 / 5.0;
+	cb_matrix_array[3][1][0] = 3.0;       cb_matrix_array[3][1][1] = 1.0;       cb_matrix_array[3][1][2] = 3.0;       cb_matrix_array[3][1][3] = 5.0; cb_matrix_array[3][1][4] = 1.0 / 6.0; cb_matrix_array[3][1][5] = 1.0 / 5.0;
+	cb_matrix_array[3][2][0] = 1.0 / 2.0; cb_matrix_array[3][2][1] = 1.0 / 3.0; cb_matrix_array[3][2][2] = 1.0;       cb_matrix_array[3][2][3] = 3.0; cb_matrix_array[3][2][4] = 1.0 / 6.0; cb_matrix_array[3][2][5] = 1.0 / 5.0;
+	cb_matrix_array[3][3][0] = 1.0 / 3.0; cb_matrix_array[3][3][1] = 1.0 / 5.0; cb_matrix_array[3][3][2] = 1.0 / 3.0; cb_matrix_array[3][3][3] = 1.0; cb_matrix_array[3][3][4] = 1.0 / 6.0; cb_matrix_array[3][3][5] = 1.0 / 5.0;
+	cb_matrix_array[3][4][0] = 6.0;       cb_matrix_array[3][4][1] = 6.0;       cb_matrix_array[3][4][2] = 6.0;       cb_matrix_array[3][4][3] = 6.0; cb_matrix_array[3][4][4] = 1.0;       cb_matrix_array[3][4][5] = 2.0;
+	cb_matrix_array[3][5][0] = 5.0;       cb_matrix_array[3][5][1] = 5.0;       cb_matrix_array[3][5][2] = 5.0;       cb_matrix_array[3][5][3] = 5.0; cb_matrix_array[3][5][4] = 1.0 / 2.0; cb_matrix_array[3][5][5] = 1.0;
 
-	cb_matrix_array[4][0][0] = 1.0;       cb_matrix_array[4][0][1] = 8.0; cb_matrix_array[4][0][2] = 6.0;
-	cb_matrix_array[4][1][0] = 1.0 / 8.0; cb_matrix_array[4][1][1] = 1.0; cb_matrix_array[4][1][2] = 1.0 / 4.0;
-	cb_matrix_array[4][2][0] = 1.0 / 6.0; cb_matrix_array[4][2][1] = 4.0; cb_matrix_array[4][2][2] = 1.0;
+	cb_matrix_array[4][0][0] = 1.0;       cb_matrix_array[4][0][1] = 5.0; cb_matrix_array[4][0][2] = 1.0 / 4.0; cb_matrix_array[4][0][3] = 1.0;       cb_matrix_array[4][0][4] = 2.0;       cb_matrix_array[4][0][5] = 3;
+	cb_matrix_array[4][1][0] = 1.0 / 5.0; cb_matrix_array[4][1][1] = 1.0; cb_matrix_array[4][1][2] = 1.0 / 4.0; cb_matrix_array[4][1][3] = 1.0 / 3.0; cb_matrix_array[4][1][4] = 1.0 / 2.0; cb_matrix_array[4][1][5] = 1;
+	cb_matrix_array[4][2][0] = 4.0;       cb_matrix_array[4][2][1] = 4.0; cb_matrix_array[4][2][2] = 1.0;       cb_matrix_array[4][2][3] = 2.0;       cb_matrix_array[4][2][4] = 3.0;       cb_matrix_array[4][2][5] = 4;
+	cb_matrix_array[4][3][0] = 1.0;       cb_matrix_array[4][3][1] = 3.0; cb_matrix_array[4][3][2] = 1.0 / 2.0; cb_matrix_array[4][3][3] = 1.0;       cb_matrix_array[4][3][4] = 2.0;       cb_matrix_array[4][3][5] = 2;
+	cb_matrix_array[4][4][0] = 1.0 / 2.0; cb_matrix_array[4][4][1] = 2.0; cb_matrix_array[4][4][2] = 1.0 / 3.0; cb_matrix_array[4][4][3] = 1.0 / 2.0; cb_matrix_array[4][4][4] = 1.0;       cb_matrix_array[4][4][5] = 2;
+	cb_matrix_array[4][5][0] = 1.0 / 3.0; cb_matrix_array[4][5][1] = 1.0; cb_matrix_array[4][5][2] = 1.0 / 4.0; cb_matrix_array[4][5][3] = 1.0 / 2.0; cb_matrix_array[4][5][4] = 1.0 / 2.0; cb_matrix_array[4][5][5] = 1;
+
+	cb_matrix_array[5][0][0] = 1.0;       cb_matrix_array[5][0][1] = 1.0 / 7.0; cb_matrix_array[5][0][2] = 2.0;       cb_matrix_array[5][0][3] = 1.0 / 6.0; cb_matrix_array[5][0][4] = 3.0; cb_matrix_array[5][0][5] = 1.0 / 3.0;
+	cb_matrix_array[5][1][0] = 7.0;       cb_matrix_array[5][1][1] = 1.0;       cb_matrix_array[5][1][2] = 5.0;       cb_matrix_array[5][1][3] = 2.0;       cb_matrix_array[5][1][4] = 6.0; cb_matrix_array[5][1][5] = 4.0;
+	cb_matrix_array[5][2][0] = 1.0 / 2.0; cb_matrix_array[5][2][1] = 1.0 / 5.0; cb_matrix_array[5][2][2] = 1.0;       cb_matrix_array[5][2][3] = 1.0 / 3.0; cb_matrix_array[5][2][4] = 2.0; cb_matrix_array[5][2][5] = 2.0;
+	cb_matrix_array[5][3][0] = 6.0;       cb_matrix_array[5][3][1] = 1.0 / 2.0; cb_matrix_array[5][3][2] = 3.0;       cb_matrix_array[5][3][3] = 1.0;       cb_matrix_array[5][3][4] = 4.0; cb_matrix_array[5][3][5] = 3.0;
+	cb_matrix_array[5][4][0] = 1.0 / 3.0; cb_matrix_array[5][4][1] = 1.0 / 6.0; cb_matrix_array[5][4][2] = 1.0 / 2.0; cb_matrix_array[5][4][3] = 1.0 / 4.0; cb_matrix_array[5][4][4] = 1.0; cb_matrix_array[5][4][5] = 1.0 / 3.0;
+	cb_matrix_array[5][5][0] = 3.0;       cb_matrix_array[5][5][1] = 1.0 / 4.0; cb_matrix_array[5][5][2] = 1.0 / 2.0; cb_matrix_array[5][5][3] = 1.0 / 3.0; cb_matrix_array[5][5][4] = 3.0; cb_matrix_array[5][5][5] = 1.0;
+
+	//cb_matrix_array[0][0][0] = 1.0;       cb_matrix_array[0][0][1] = 6.0;       cb_matrix_array[0][0][2] = 8.0;
+	//cb_matrix_array[0][1][0] = 1.0 / 6.0; cb_matrix_array[0][1][1] = 1.0;       cb_matrix_array[0][1][2] = 4.0;
+	//cb_matrix_array[0][2][0] = 1.0 / 8.0; cb_matrix_array[0][2][1] = 1.0 / 4.0; cb_matrix_array[0][2][2] = 1.0;
+
+	//cb_matrix_array[1][0][0] = 1.0;       cb_matrix_array[1][0][1] = 7.0; cb_matrix_array[1][0][2] = 1.0 / 5.0;
+	//cb_matrix_array[1][1][0] = 1.0 / 7.0; cb_matrix_array[1][1][1] = 1.0; cb_matrix_array[1][1][2] = 1.0 / 8.0;
+	//cb_matrix_array[1][2][0] = 5.0;       cb_matrix_array[1][2][1] = 8.0; cb_matrix_array[1][2][2] = 1.0;
+
+	//cb_matrix_array[2][0][0] = 1.0; cb_matrix_array[2][0][1] = 1.0 / 2.0; cb_matrix_array[2][0][2] = 1.0 / 2.0;
+	//cb_matrix_array[2][1][0] = 2.0; cb_matrix_array[2][1][1] = 1.0;       cb_matrix_array[2][1][2] = 1.0;
+	//cb_matrix_array[2][2][0] = 2.0; cb_matrix_array[2][2][1] = 1.0;       cb_matrix_array[2][2][2] = 1.0;
+
+	//cb_matrix_array[3][0][0] = 1.0; cb_matrix_array[3][0][1] = 1.0 / 7.0; cb_matrix_array[3][0][2] = 1.0 / 5.0;
+	//cb_matrix_array[3][1][0] = 7.0; cb_matrix_array[3][1][1] = 1.0;       cb_matrix_array[3][1][2] = 3.0;
+	//cb_matrix_array[3][2][0] = 5.0; cb_matrix_array[3][2][1] = 1.0 / 3.0; cb_matrix_array[3][2][2] = 1.0;
+
+	//cb_matrix_array[4][0][0] = 1.0;       cb_matrix_array[4][0][1] = 8.0; cb_matrix_array[4][0][2] = 6.0;
+	//cb_matrix_array[4][1][0] = 1.0 / 8.0; cb_matrix_array[4][1][1] = 1.0; cb_matrix_array[4][1][2] = 1.0 / 4.0;
+	//cb_matrix_array[4][2][0] = 1.0 / 6.0; cb_matrix_array[4][2][1] = 4.0; cb_matrix_array[4][2][2] = 1.0;
 
 	long double * cc_weight_array = array_alloc(CRITERIA_COUNT);
 	long double coherence_coefficient;
