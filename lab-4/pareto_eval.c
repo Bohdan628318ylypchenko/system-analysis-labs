@@ -25,9 +25,18 @@ void pareto_form_set(pareto_data * restrict const p_d)
 			if ((i == j) || (p_d->pareto_set[j] == EXCLUDED))
 				continue;
 
-			if (_is_1st_better_by_all_criteria_2nd(p_d->criteria_count, p_d->criteria_type_1darr,
-										           p_d->data_2darr[i], p_d->data_2darr[j]))
+			int score = _is_1st_better_by_all_criteria_2nd(p_d->criteria_count, p_d->criteria_type_1darr,
+														   p_d->data_2darr[i], p_d->data_2darr[j]);
+			if (score == p_d->criteria_count)
+			{
 				p_d->pareto_set[j] = EXCLUDED;
+				printf("a %d > a %d\n", i, j);
+			}
+			else if (score == -1.0 * p_d->criteria_count)
+			{
+				p_d->pareto_set[i] = EXCLUDED;
+				printf("a %d < a %d\n", i, j);
+			}
 		}
 	}
 
@@ -157,7 +166,7 @@ static inline int _is_1st_better_by_all_criteria_2nd(int criteria_count,
 		}
 	}
 
-	return score == criteria_count;
+	return score;
 }
 
 static inline void _normalize_bool(int criteria_index, pareto_data * restrict const p_d)
